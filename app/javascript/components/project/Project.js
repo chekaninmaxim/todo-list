@@ -3,12 +3,8 @@ import axios from 'axios';
 
 import ProjectHeader from './ProjectHeader.js';
 import TasksList from './TasksList';
-import icon from './to-do-list.svg';
 
-function Project(props) {
- 
-	console.log(props.projectData.tasks);
- 
+function Project(props) { 
  
 	return (
 		<div style={{'paddingTop' : '15px', 'paddingBottom' : '15px'}}>

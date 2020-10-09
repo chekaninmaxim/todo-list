@@ -28,14 +28,13 @@ export default function NewProjectDialog(props) {
     })
     .then(response => {
       setOpen(false);
-      console.log(response);
       props.addNewProject({
         id: response.data.data.id,
         title: response.data.data.attributes.title,
         tasks: []
       })
     })
-    .catch(response => console.log(response));
+    .catch(console.log);
   }
 
   return (

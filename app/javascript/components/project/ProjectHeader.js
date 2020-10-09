@@ -9,7 +9,6 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import SaveIcon from '@material-ui/icons/Save';
 import EditableText from './EditableText.js';
 import ListAltIcon from '@material-ui/icons/ListAlt';
-import icon from './to-do-list.svg';
 
 
 function ProjectHeader(props) {
@@ -46,14 +45,9 @@ function ProjectHeader(props) {
 	}
 
 	const buttons = [
+		<SaveButton key={0} saveProject={saveProject} visible={unSaved} />,
 		<IconButton
-			style = {{margin: 'auto, 0px'}}
-			disabled={!unSaved}
-			onClick={saveProject}
-		>
-			<SaveIcon fontSize='large' style={{color:'white'}}/>
-		</IconButton>,
-		<IconButton
+			key={1}
 			style = {{margin: 'auto, 0px'}}
 			onClick={deleteProject} >
 			<DeleteIcon fontSize='large' style={{color:'white'}}/>
@@ -86,6 +80,21 @@ function ProjectHeader(props) {
 	</div>;
 
 	return header;
+}
+
+function SaveButton(props) {
+	if (props.visible) {
+		return (
+			<IconButton
+				style = {{margin: 'auto, 0px'}}
+				onClick={props.saveProject}
+			>
+				<SaveIcon fontSize='large' style={{color:'white'}}/>
+			</IconButton>
+		)
+	} else {
+		return <span> </span>
+	}
 }
 
 export default ProjectHeader;
