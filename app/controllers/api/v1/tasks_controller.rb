@@ -1,10 +1,11 @@
 module Api
 	module V1
 		class TasksController < ApplicationController
-			protect_from_forgery with: :null_session
+			# protect_from_forgery with: :null_session
 			
 			def create
 				task = Task.new(task_params)
+				puts request.format.json?
 
 				if task.save
 					render json: TaskSerializer.new(task).serialized_json

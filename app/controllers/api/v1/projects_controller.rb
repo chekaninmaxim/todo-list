@@ -1,7 +1,6 @@
 module Api
 	module V1
 		class ProjectsController < ApplicationController
-			protect_from_forgery with: :null_session
 
 			def index
 				projects = Project.all
@@ -17,7 +16,6 @@ module Api
 
 			def create
 				project = Project.new(project_params)
-
 				if project.save
 					render json: ProjectSerializer.new(project, options).serialized_json
 				else
