@@ -22,11 +22,11 @@ function Task(props) {
 	const [dbUnSaved, setDbUnSaved] = useState(props.unSaved);
 
 
-	const saveTask = () => {
+	const saveTask = (isDone=status) => {
 		const taskData = {
 		  	description: description,
 		  	priority: priority,
-		  	status: status,
+		  	status: isDone,
 		  	deadline: deadline,
 		  	project_id: props.projectId
 		};
@@ -99,9 +99,11 @@ function Task(props) {
 		<Checkbox
 			label="Done"
 			checked={Boolean(status)}
-			onChange={() => {
+			onChange={(e) => {
 				setStatus(!status);
 				setUnSaved(true);
+				saveTask(!status);
+
 			}}
 			color='primary'
 		/>,
