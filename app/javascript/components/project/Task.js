@@ -20,7 +20,7 @@ function Task(props) {
 	const [status, setStatus] = useState(props.taskData.status);
 	const [unSaved, setUnSaved] = useState(props.unSaved);
 	const [dbUnSaved, setDbUnSaved] = useState(props.unSaved);
-
+	const [taskId, setTaskId] = useState(props.taskId)
 
 	const saveTask = (isDone=status) => {
 		const taskData = {
@@ -33,13 +33,16 @@ function Task(props) {
 
 		axios({
 		  method: dbUnSaved ? 'post' : 'patch',
-		  url: taskUrl + (dbUnSaved ? '' : props.taskId),
+		  url: taskUrl + (dbUnSaved ? '' : taskId),
 		  data: {task : taskData}
 		})
 		.then(resp => {
+			if (dbUnSaved) {
+				setTaskId(resp.data.data.id);
+			}
 			setUnSaved(false);
-			if (props.onSaveToDb)
-				props.onSaveToDb(resp.data.data.id);
+			setDbUnSaved(false);
+
 		})
 		.catch('SAVE TASK ERROR', console.log);
 	}
@@ -109,7 +112,7 @@ function Task(props) {
 		/>,
 
 		<SaveOrDeleteButton
-			onSave={saveTask}
+			onSave={() => saveTask(status)}
 			onDelete={deleteTask}
 			deleteMode={Boolean(status)}
 			visible={unSaved}
@@ -156,9 +159,11 @@ function SaveOrDeleteButton(props) {
 		};
 
 		if (props.visible) 
-			return (<IconButton onClick={props.onSave}>
-				<SaveIcon />
-			</IconButton>)
+			return (
+				<IconButton onClick={props.onSave}>
+					<SaveIcon />
+				</IconButton>
+			)
 		else
 			return (<Box style= {invisibleStyle}></Box>)
 	}

@@ -11,15 +11,6 @@ function TasksList(props) {
 	const [tasks, setTasks] = useState(props.tasks);
 
 	const deleteTask = (idx) => setTasks(tasks.filter((t, i) => idx !== i));
-	const onSaveTaskToDb = (idx, newId) => setTasks(
-		tasks.map((t, i) => {
-			if (i === idx) {
-				return {...t, id: newId};
-			} else {
-				return t;
-			}
-		})
-	);
 
 	const getNewTaskId = () => Math.max(0, Math.max(...tasks.map(t => t.id)) + 1);
 
@@ -31,15 +22,16 @@ function TasksList(props) {
 		setTasks(tasks.concat([newTaskData]))
 	}
 
-	const tasksViews = tasks.map((t, idx) => <Task
-		key={t.id}
-		taskId={t.id}
-		taskData={t.attributes}
-		unSaved = {t.unSaved}
-		onDelete={() => deleteTask(idx)}
-		projectId={props.projectId}
-		onSaveTaskToDb={onSaveTaskToDb}
-	/>);
+	const tasksViews = tasks.map((t, idx) => {
+		return <Task
+			key={t.id}
+			taskId={t.id}
+			taskData={t.attributes}
+			unSaved = {t.unSaved}
+			onDelete={() => deleteTask(idx)}
+			projectId={props.projectId}
+		/>
+	});
 
 	const addTaskButton =
 		<Tooltip
